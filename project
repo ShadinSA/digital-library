@@ -1,0 +1,219 @@
+public class Book {
+
+	private String ID, TB, AB;
+	private boolean LOB;
+	Book(){
+	ID="";
+	TB="";
+	AB="";
+	LOB=false;
+	}
+	Book(String ID,String TB,String AB){
+	this.ID=ID;
+	this.TB=TB;
+	this.AB=AB;
+	}
+	public String getTB() {
+	return this.TB;
+	}
+	public void setTB(String TB) {
+	this.TB = TB;
+	}
+	public void LOB(String TB) {
+	this.TB=TB;
+	LOB=true;
+	}
+	public boolean getLOB() {
+	return this.LOB;
+	}
+	public void setLOB(boolean LOB) {
+	this.LOB = LOB;
+	}
+	
+	public boolean isLOB() {
+
+		if(LOB==true)
+	return true;
+	else
+	return false;
+	}
+	public String toString() {
+	return "Title:"+TB+" "+ "ID:" +ID+ " " +"Author:"+AB;
+	}
+}
+
+
+
+
+
+
+
+
+
+public class Reader extends Book  {
+
+	Reader(String ID,String TB,String AB){
+	
+		super(ID,TB,AB);}
+		
+	
+	@Override
+	public boolean isLOB() {
+		
+		if(LOB==true)
+		return true;
+		else
+		return false;
+		
+		
+		}  }
+
+import java.util.Scanner;
+
+public class Library {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Book book[] = new Book[20] ;
+		for(int i=0; i<20;i++) {
+		book[i]=new Book();
+		}
+		book[0]=new Book("201","Be you","lamya");
+		book[1]=new Book("302","Ababeel","ahmed");
+		book[2]=new Book("403","A maze","othman");
+		book[1].setLOB(true);
+		int choose;
+		Scanner C = new Scanner(System.in);
+		System.out.println(" ( Welcome To Library System ) ");
+		do {
+		System.out.println("");
+		System.out.println("  Choose How i can Help you ? ");
+		System.out.println("1- Add new Book");
+		System.out.println("2- Book loan");
+		System.out.println("3- Return Book");
+		System.out.println("4- Show number of books in library");
+		System.out.println("5- Show all books");
+		System.out.println("6- Show a spesfic book information");
+		System.out.println("7- Show avaliable books");
+		System.out.println("8- Exit");
+		choose=C.nextInt();
+		if(choose<0 || choose >8)
+		System.out.println("Sorry, the number is invalid");
+		else {
+		switch(choose) {
+
+		case 1:
+		String ID, TB,AB;
+		System.out.println("Enter The ID of the book");
+		ID=C.next();
+		System.out.println("Enter The title of the book : ");
+		TB=C.next();
+		System.out.println("Enter The author of the book : ");
+		AB=C.next();
+		int found=0;
+		for(int i=0; i<20 ; i++) {
+		if(book[i].getTB()=="") {
+		book[i]=new Book(ID,TB, AB);
+		found=1;
+		break;}
+		}
+		if(found==1)
+		System.out.println("The book has been added");
+		else
+		System.out.println("Sorry,The library is full");
+		break;
+
+		case 2:
+		System.out.println("Enter The title of the book :");
+		TB=C.next();found=0;
+		for (int i=0; i<20 ; i++)
+		{
+		if (TB.equals(book[i].getTB()) &&
+		book[i].isLOB()==true)
+		{
+		System.out.println("The book is loaned");
+		found=1;
+		} else if(TB.equals(book[i].getTB()) &&
+		book[i].isLOB()==false)
+		{
+		
+		System.out.println("You have loaned the book now");
+		book[i].setLOB(true);
+		found=1; }
+		} if(found==0) {
+		System.out.println("No book found in the library");
+		}
+		break;
+
+		case 3:
+		System.out.println("Enter The title of the book :");
+		TB=C.next();
+		found=0;
+		for (int i=0; i<20 ; i++)
+		{
+		if (TB.equals(book[i].getTB()) &&
+		book[i].isLOB()==true){
+		book[i].setLOB(false);
+		System.out.println("The book has been returned ");
+		found=1;
+		}else if (TB.equals(book[i].getTB()) &&
+		book[i].isLOB()==false) {
+		System.out.println("This book is alerdy in the library");
+		found=1;
+		}}
+		if(found==0) {
+		System.out.println("No book has found in the library");
+		}
+		break;
+
+		case 4:
+		int num=0;
+		for (int i=0; i<20 ; i++)
+		{
+		if (book[i].getTB() !="" )
+		num++;
+             }
+		System.out.println("Number of books in library is:"+num);
+		break;
+
+
+
+
+		case 5:
+             for (int i=0; i<20 ; i++){
+		if (book[i].getTB()!= "")
+		System.out.println(book[i]);
+		}
+		break;
+
+		case 6:
+		System.out.println("Enter The title of the book :");
+		TB=C.next();
+		found=0;
+		for (int i=0; i<20 ; i++){
+		if (TB.equals(book[i].getTB())) {
+		System.out.println(book[i]);
+		found=1;
+		}}
+		if(found==0) {
+		System.out.println("No book has found in the library");
+		}
+		break;
+		
+             case 7:
+		for (int i=0; i<20 ; i++)
+		{
+		if (book[i].getTB()!= "" &&
+		book[i].isLOB()==false)
+		System.out.println(book[i]);
+		}
+		break;
+		case 8:
+		System.out.println(" ( Thanks for using the library system )");
+		break;
+		}
+		}}while(choose!=8);
+		}
+		
+	}
